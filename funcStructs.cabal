@@ -51,12 +51,12 @@ extra-doc-files:    CHANGELOG.md
 common warnings
     ghc-options: -Wall
 
-library
+library funcStructs-lib
     -- Import common warning flags.
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  MyLib BatchedQueue Queue
+    exposed-modules:  BatchedQueue Queue Heap LeftistHeap
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -89,7 +89,7 @@ executable funcStructs
     -- Other library packages from which modules are imported.
     build-depends:
         base ^>=4.17.2.0,
-        funcStructs
+        funcStructs-lib
 
     -- Directories containing source files.
     hs-source-dirs:   app
@@ -122,4 +122,5 @@ test-suite funcStructs-test
     -- Test dependencies.
     build-depends:
         base ^>=4.17.2.0,
-        funcStructs
+        HUnit ^>=1.6,
+        funcStructs-lib

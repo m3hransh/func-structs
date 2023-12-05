@@ -1,21 +1,22 @@
-module BatchedQueue (BatchedQueue) where
-  import Prelude hiding (head, tail)
-  import Queue 
+module BatchedQueue (BatchedQueue (..)) where
 
-  data BatchedQueue a = BQ [a] [a]
+import Queue
+import Prelude hiding (head, tail)
 
-  check :: [a] -> [a] -> BatchedQueue a
-  check [] r = BQ (reverse r) []
-  check f r = BQ f r 
+data BatchedQueue a = BQ [a] [a]
 
-  instance Queue BatchedQueue where
-    empty = BQ [] []
-    isEmpty (BQ f _) = null f
+check :: [a] -> [a] -> BatchedQueue a
+check [] r = BQ (reverse r) []
+check f r = BQ f r
 
-    snoc (BQ f r) x = check f (x : r)
+instance Queue BatchedQueue where
+  empty = BQ [] []
+  isEmpty (BQ f _) = null f
 
-    head (BQ [] _) = error "empty queue"
-    head (BQ (x : _) _) = x
+  snoc (BQ f r) x = check f (x : r)
 
-    tail (BQ [] _) = error "empty queue"
-    tail (BQ (_ : f) r) = check f r
+  head (BQ [] _) = error "empty queue"
+  head (BQ (x : _) _) = x
+
+  tail (BQ [] _) = error "empty queue"
+  tail (BQ (_ : f) r) = check f r
